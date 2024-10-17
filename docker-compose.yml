@@ -1,0 +1,22 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  psql:
+    image: postgres:alpine3.20
+    ports:
+      - "5555:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+
+    volumes:
+      - ./pg-db:/var/lib/postgresql/data
+    networks:
+      - network
+    restart: always
+ 
+networks:
+  network:
+    driver: bridge
