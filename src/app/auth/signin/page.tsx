@@ -1,3 +1,4 @@
+// "use client"
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -5,12 +6,22 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
+// import { signIn } from "next-auth/react"
+
+import { signIn } from "@/auth"
+
 export const metadata: Metadata = {
   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
   description: "This is Next.js Signin Page TailAdmin Dashboard Template",
 };
 
 const SignIn: React.FC = () => {
+
+  const handleSignIn = async () => {
+    "use server"
+    await signIn("google");
+  };
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sign In" />
@@ -248,7 +259,7 @@ const SignIn: React.FC = () => {
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                <button  onClick={handleSignIn} className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -284,6 +295,7 @@ const SignIn: React.FC = () => {
                   </span>
                   Sign in with Google
                 </button>
+
 
                 <div className="mt-6 text-center">
                   <p>
