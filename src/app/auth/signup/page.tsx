@@ -5,6 +5,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import Form from "@/lib/form";
 
 export const metadata: Metadata = {
   title: "Next.js SignUp Page | TailAdmin - Next.js Dashboard Template",
@@ -174,7 +175,7 @@ const SignUp: React.FC = () => {
                 Sign Up to TailAdmin
               </h2>
 
-              <form>
+              <Form action="/api/signup">
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Name
@@ -217,6 +218,7 @@ const SignUp: React.FC = () => {
                   <div className="relative">
                     <input
                       type="email"
+                      name="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
@@ -282,6 +284,7 @@ const SignUp: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      name="password"
                       type="password"
                       placeholder="Re-enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -364,7 +367,7 @@ const SignUp: React.FC = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
