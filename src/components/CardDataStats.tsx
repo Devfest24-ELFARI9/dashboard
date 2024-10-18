@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-interface CardDataStatsProps {
+export interface CardDataStatsProps {
   title: string;
   total: string;
   rate: string;

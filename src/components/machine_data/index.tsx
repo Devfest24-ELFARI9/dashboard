@@ -1,6 +1,9 @@
+"use client";
+import useSocket from "@/app/hooks/useSocket";
 // components/MachineData.tsx
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { WeldingRobotData } from "@/types/machine";
+import { useState } from "react";
 
 
 
@@ -17,8 +20,24 @@ const formatKey = (key: string): string => {
     return key.replace(/_/g, " ").replace(/([A-Z])/g, ' $1').toUpperCase();
 };
 
-const MachineData: React.FC<any> = ({ data }) => {
-    const machineName = machineNameDictionary[data.machine_id] || "Unknown Machine";
+const MachineData: React.FC<any> = () => {
+    const [data, setData] = useState<any | null>(null);
+    const machineName =
+      machineNameDictionary[data?.machine_id ?? "welding_robot_006"] ||
+      "Unknown Machine";
+
+
+
+
+    const onMessage = (data) => {
+        setData(data);
+    }
+
+    const onError = (error) => {
+        console.log(error)
+    }
+
+    useSocket(onMessage, onError);
 
     return (
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 mt-16">
@@ -26,7 +45,7 @@ const MachineData: React.FC<any> = ({ data }) => {
                 {machineName}
             </h2>
             <div className="space-y-2">
-                {Object.entries(data).map(([key, value]) => {
+                {data !== null && Object.entries(data).map(([key, value]) => {
                     let displayValue;
 
                     // Special case for object values (like arm_position)
