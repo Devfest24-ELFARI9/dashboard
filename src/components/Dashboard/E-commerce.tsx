@@ -9,6 +9,7 @@ import CardDataStats from "../CardDataStats";
 import useSocket from "@/app/hooks/useSocket";
 import CardWithPie from "../MachineCounts/CardWithPie";
 import MachineCountsCards, { data } from "../MachineCounts/MachineCountsCards";
+import TempChart, {data as tempData} from "../Charts/TempChart";
 
 const MapOne = dynamic(() => import("@/components/Maps/MapOne"), {
   ssr: false,
@@ -109,6 +110,7 @@ const ECommerce: React.FC = () => {  return (
     <MachineCountsCards data={data} />
     <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
       <ChartOne />
+      <TempChart data={tempData} />
       <ChartTwo />
       <ChartThree />
       <MapOne />
