@@ -1,18 +1,26 @@
-import { lucia } from "lucia";
-import { nextjs_future } from "lucia/middleware";
-import { prisma } from "@lucia-auth/adapter-prisma";
-import { PrismaClient } from "@prisma/client";
+import { Lucia } from "lucia";
+import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
+import { db } from "./prisma";
 
-const client = new PrismaClient();
 
-// expect error (see next section)
-export const auth = lucia({
-  adapter: prisma(client),
-  env: "DEV", // "PROD" if deployed to HTTPS
-  middleware: nextjs_future(), // NOT nextjs()
-  sessionCookie: {
-    expires: false,
+export const lucia = new Lucia(
+  new PrismaAdapter(db.session, db.user),
+  {
+    getSessionAttributes: async (att) => {
+      return {
+        email: att?.email,
+      }
+    }
   },
-});
+);
 
-export type Auth = typeof auth;
+
+// IMPORTANT!
+declare module "lucia" {
+	interface Register {
+    Lucia: typeof lucia;
+    DatabaseUserAttributes: {
+      email: string;
+    };
+  }
+}

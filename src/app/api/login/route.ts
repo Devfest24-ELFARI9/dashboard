@@ -1,9 +1,9 @@
-import { auth } from "@/lib/auth";
+import { lucia } from "@/lib/auth";
 import * as context from "next/headers";
 import { NextResponse } from "next/server";
-import { LuciaError } from "lucia";
-
+import { verify } from "argon2";
 import type { NextRequest } from "next/server";
+import { db } from "@/lib/prisma";
 export const GET = async (request: NextRequest) => {
  return NextResponse.json(
    {
@@ -50,19 +50,38 @@ export const POST = async (request: NextRequest) => {
   try {
     // find user by key
     // and validate password
-    console.log("HERERERER", auth);
 
-    const key = await auth.useKey("email", username.toLowerCase(), password);
-    const session = await auth.createSession({
-      userId: key.userId,
-      attributes: {},
+    const user = await db.user.findFirst({where: {email: username}})
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "Invalid username",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+
+    const validPassword = await verify(user.password_hash, password, {
+      memoryCost: 19456,
+      timeCost: 2,
+      outputLen: 32,
+      parallelism: 1,
     });
-    const authRequest = auth.handleRequest(request.method, context);
-    authRequest.setSession(session);
+
+    if (!validPassword) {
+      return new Response("Invalid password", {status: 400})
+    }
+   
+	const session = await lucia.createSession(user.id, {});
+  const sessionCookie = lucia.createSessionCookie(session?.id);
     return new Response(null, {
       status: 302,
       headers: {
         Location: "/", // redirect to profile page
+        "Set-Cookie": sessionCookie.serialize(),
       },
     });
   } catch (e) {

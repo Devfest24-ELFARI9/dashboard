@@ -1,9 +1,11 @@
-import { auth } from "@/lib/auth";
-import * as context from "next/headers";
+import { lucia } from "@/lib/auth";
+import { db } from "@/lib/prisma";
+import { hash } from "argon2";
+import { error } from "console";
+import { generateIdFromEntropySize } from "lucia";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
-import { act } from "react";
 
 const USER_TABLE_UNIQUE_CONSTRAINT_ERROR = "unique constraint error";
 export const POST = async (request: NextRequest) => {
@@ -41,27 +43,36 @@ export const POST = async (request: NextRequest) => {
   }
   try {
 
-    const user = await auth.createUser({
-      userId: username.toLowerCase(),
-      key: null,
-      attributes: {
-        email: username,
-      },
-    });
+    const userId = generateIdFromEntropySize(10);
     
-    const session = await auth.createSession({
-      userId: username.toLowerCase(),
-      attributes: {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
-        active: true,
-      },
+    const password_hash = await hash(password, {
+      // recommended minimum parameters
+      memoryCost: 19456,
+      timeCost: 2,
+      parallelism: 1,
     });
 
-    const authRequest = auth.handleRequest(request.method, context);
-    authRequest.setSession(session);
+
+    const res = await db.user.create({data: {id: userId, email: username, password_hash}})
+
+    // const user = await auth.createUser({
+    //   key: {
+    //     providerId: "username", // auth method
+    //     providerUserId: username.toLowerCase(), // unique id when using "username" auth method
+    //     password, // hashed by Lucia
+    //   },
+    //   attributes: {
+    //     username,
+    //   },
+    // });
+    
+    const session = await lucia.createSession(userId, {});
+    const sessionCookie = lucia.createSessionCookie(session.id);
+
     return new Response(null, {
       status: 302,
       headers: {
+        "Set-Cookie": sessionCookie.serialize(),
         Location: "/", // redirect to profile page
       },
     });
@@ -86,6 +97,7 @@ export const POST = async (request: NextRequest) => {
 
     return NextResponse.json(
       {
+        success: false,
         error: "An unknown error occurred",
       },
       {

@@ -16,17 +16,19 @@ const Form = ({
       method="post"
       onSubmit={async (e) => {
         e.preventDefault();
+        console.log("submitting form");
         const formData = new FormData(e.currentTarget);
         const response = await fetch(action, {
           method: "POST",
           body: formData,
-          redirect: "manual",
+          // redirect: "manual",
         });
 
-        if (response.status === 0) {
+        console.log("response", response);  
+        if (response.ok) {
           // redirected
           // when using `redirect: "manual"`, response status 0 is returned
-          return router.refresh();
+          return router.push("/");
         }
       }}
     >

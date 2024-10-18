@@ -5,9 +5,6 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Form from "@/lib/form";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import * as context from "next/headers";
 
 export const metadata: Metadata = {
   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
@@ -15,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 const SignIn: React.FC = async () => {
-  const authRequest = auth.handleRequest("GET", context);
-  const session = await authRequest.validate();
-  if (session) redirect("/");
+  // const authRequest = lib.handleRequest("GET", context);
+  // const session = await authRequest.validate();
+  // if (session) redirect("/");
 
   return (
     <DefaultLayout>

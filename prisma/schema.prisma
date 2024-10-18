@@ -9,35 +9,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// Define your User model
 model User {
-  id        String    @id @default(uuid())
-  // username  String?    @unique
-  email     String    @unique
-  // Additional fields (e.g., email, name, etc.)
-  
-  // Relations with keys and sessions
-  auth_session Session[]
-  key          Key[]
-}
-
-model Key {
-  id             String   @id @default(cuid())
-  providerId     String
-  providerUserId String
-  hashedPassword String?   // Optional for OAuth
-
-  userId  String
-  user    User?     @relation(fields: [userId], references: [id])
-
-  
-  @@unique([providerId, providerUserId])
+  id       String    @id
+  email    String    @unique
+  password_hash String
+  sessions Session[]
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  active    Boolean
-  userId  String
-  user    User     @relation(fields: [userId], references: [id])
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
