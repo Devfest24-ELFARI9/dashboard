@@ -10,12 +10,16 @@ type UseSocketData<T> = {
 
 const url = "http://localhost:3005";
 
+interface UseSocketProps<T> {
+  url: string; // WebSocket URL passed as a parameter
+  onMessage: (data: T) => void; // Callback to handle the received message
+  onError?: (error: ErrorEvent) => void; // Optional callback to handle errors
+}
 // The hook takes a URL and an event name as parameters
 const useSocket = <T = unknown>(
-  event: string,
+  onMessage: (data) => void,
+  onError: (error: ErrorEvent) => void
 ): UseSocketData<T> => {
-  const [data, setData] = useState<T | null>(null);
-  const [error, setError] = useState<Error | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -27,12 +31,12 @@ const useSocket = <T = unknown>(
     socketRef.current.onmessage = (event) => {
       console.log("Received data on ", event);
       const data = JSON.parse(event.data);
-      setData(data);
+      onMessage(data);
     };
 
     // Handle connection errors
     socketRef.current.onerror = (err: any) => {
-      setError(err);
+      onError(err);
     };
 
     // Cleanup function to disconnect the socket when the component unmounts
@@ -41,7 +45,7 @@ const useSocket = <T = unknown>(
     };
   }, []);
 
-  return { data, error };
+  return null;
 };
 
 export default useSocket;
