@@ -27,6 +27,7 @@ const useSocket = <T = unknown>(
     const socket = new WebSocket(url);
 
     socketRef.current = socket;
+    
     // Listen for data from the specified event
     socketRef.current.onmessage = (event) => {
       console.log("Received data on ", event);
