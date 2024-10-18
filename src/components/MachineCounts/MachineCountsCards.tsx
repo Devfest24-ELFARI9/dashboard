@@ -48,7 +48,7 @@ export default function MachineCountsCards({data}: {data: CardWithPieProps[]}) {
         Operating Machines
       </h4>
       <div className="grid grid-cols-3 gap-2">
-        {data.map((d, i) => (
+        {data?.map((d, i) => (
           <CardWithPie key={i} {...d} />
         ))}
       </div>
