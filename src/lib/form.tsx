@@ -40,11 +40,17 @@ const Form = ({
           }
         }
 
-        const response = await fetch(action, {
+        let response;
+        try {
+        response = await fetch(action, {
           method: "POST",
           body: formData,
           // redirect: "manual",
         });
+
+      } catch (error) {
+        console.log("error", error);
+      }
 
         if (response.ok) {
           // redirected
