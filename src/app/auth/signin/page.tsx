@@ -5,6 +5,7 @@ import Image from "next/image";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import Form from "@/lib/form";
 
 // import { signIn } from "next-auth/react"
 
@@ -15,12 +16,11 @@ export const metadata: Metadata = {
   description: "This is Next.js Signin Page TailAdmin Dashboard Template",
 };
 
-const SignIn: React.FC = () => {
+const SignIn: React.FC = async () => {
+  // const authRequest = lib.handleRequest("GET", context);
+  // const session = await authRequest.validate();
+  // if (session) redirect("/");
 
-  const handleSignIn = async () => {
-    "use server"
-    await signIn("google");
-  };
 
   return (
     <DefaultLayout>
@@ -186,13 +186,14 @@ const SignIn: React.FC = () => {
                 Sign In to TailAdmin
               </h2>
 
-              <form>
+              <Form action="/api/login">
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
+                      name="email"
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -224,6 +225,8 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      name="password"
+                      id="password"
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -307,7 +310,7 @@ const SignIn: React.FC = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
