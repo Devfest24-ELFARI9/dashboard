@@ -3,6 +3,7 @@ import * as context from "next/headers";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
+import { act } from "react";
 
 const USER_TABLE_UNIQUE_CONSTRAINT_ERROR = "unique constraint error";
 export const POST = async (request: NextRequest) => {
@@ -39,20 +40,23 @@ export const POST = async (request: NextRequest) => {
     );
   }
   try {
+
     const user = await auth.createUser({
-      key: {
-        providerId: "username", // auth method
-        providerUserId: username.toLowerCase(), // unique id when using "username" auth method
-        password, // hashed by Lucia
-      },
+      userId: username.toLowerCase(),
+      key: null,
       attributes: {
-        username,
+        email: username,
       },
     });
+    
     const session = await auth.createSession({
-      userId: user.userId,
-      attributes: {},
+      userId: username.toLowerCase(),
+      attributes: {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
+        active: true,
+      },
     });
+
     const authRequest = auth.handleRequest(request.method, context);
     authRequest.setSession(session);
     return new Response(null, {
@@ -77,6 +81,8 @@ export const POST = async (request: NextRequest) => {
     //     },
     //   );
     // }
+
+    console.error(e);
 
     return NextResponse.json(
       {

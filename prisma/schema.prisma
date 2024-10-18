@@ -9,44 +9,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 String    @id @default(cuid())
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [id])
 
-  @@unique([providerId, providerAccountId])
-}
-
+// Define your User model
 model User {
-  id           String    @id @unique
-
+  id        String    @id @default(uuid())
+  // username  String?    @unique
+  email     String    @unique
+  // Additional fields (e.g., email, name, etc.)
+  
+  // Relations with keys and sessions
   auth_session Session[]
   key          Key[]
 }
 
-model Session {
-  id             String @id @unique
-  user_id        String
-  active_expires BigInt
-  idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+model Key {
+  id             String   @id @default(cuid())
+  providerId     String
+  providerUserId String
+  hashedPassword String?   // Optional for OAuth
 
-  @@index([user_id])
+  userId  String
+  user    User?     @relation(fields: [userId], references: [id])
+
+  
+  @@unique([providerId, providerUserId])
 }
 
-model Key {
-  id              String  @id @unique
-  hashed_password String?
-  user_id         String
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
-
-  @@index([user_id])
+model Session {
+  id        String   @id @default(cuid())
+  active    Boolean
+  userId  String
+  user    User     @relation(fields: [userId], references: [id])
 }
