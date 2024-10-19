@@ -47,6 +47,7 @@ const Form = ({
           body: formData,
           // redirect: "manual",
         });
+        console.log("response:",response)
 
       } catch (error) {
         console.log("error", error);
