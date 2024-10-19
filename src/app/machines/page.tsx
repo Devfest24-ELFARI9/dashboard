@@ -9,6 +9,7 @@ import agvs from '@/assets/machines/AGVs.jpeg'
 import leakTest from '@/assets/machines/Leak_test_machines.jpg'
 import Link from 'next/link';
 import PaintingRobot from '@/assets/machines/painting_robots.jpeg'
+import DashboardProvider from "@/providers/DashboardProvider";
 
 export const metadata: Metadata = {
   title: "Machines informations stats",
@@ -57,22 +58,21 @@ const MachineList: React.FC = () => {
   ];
 
   return (
-    <DefaultLayout>
+    <DashboardProvider>
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 ">
           {machines.map((machine, index) => (
             <Link key={index} href={`/machines/${machine.key}`}>
-                
-            <Machine
-              key={index}
-              imageUrl={machine.imageUrl}
-              machineName={machine.machineName}
-            />
+              <Machine
+                key={index}
+                imageUrl={machine.imageUrl}
+                machineName={machine.machineName}
+              />
             </Link>
           ))}
         </div>
       </div>
-    </DefaultLayout>
+    </DashboardProvider>
   );
 };
 
