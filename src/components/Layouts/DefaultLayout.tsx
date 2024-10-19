@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import DangerAlert from "../Alert/DangerAlert";
 import { useNotifications } from "@/contexts/NotificationsContext";
+import { User } from "lucia";
 
 export default function DefaultLayout({
   children,
