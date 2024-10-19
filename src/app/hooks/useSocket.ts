@@ -1,5 +1,6 @@
 // useSocket.ts
 
+import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useRef } from "react";
 
 // Type definition for the data received from the server
@@ -22,9 +23,13 @@ const useSocket = <T = unknown>(
 ): UseSocketData<T> => {
   const socketRef = useRef<WebSocket | null>(null);
 
+
+  const {session}=useAuth()
+
   useEffect(() => {
     // Initialize Socket.IO connection
-    const socket = new WebSocket(url);
+    const socket = new WebSocket(url+`?sessionId=${session.id}`);
+
 
     socketRef.current = socket;
     

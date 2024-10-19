@@ -116,7 +116,7 @@ const options: ApexOptions = {
       },
     },
     min: 0,
-    max: 100,
+    max: 10 ,
   },
 };
 
