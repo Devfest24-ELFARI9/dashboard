@@ -1,6 +1,5 @@
 "use client";
-import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartTwo from "../Charts/ChartTwo";
 import ChatCard from "../Chat/ChatCard";
@@ -9,7 +8,6 @@ import CardDataStats, { CardDataStatsProps } from "../CardDataStats";
 import useSocket from "@/app/hooks/useSocket";
 import TempChart from "../RealtimeCharts/TempChart";
 import PowerConsumptionChart from "../RealtimeCharts/PowerConsumptionChart";
-
 
 
 
