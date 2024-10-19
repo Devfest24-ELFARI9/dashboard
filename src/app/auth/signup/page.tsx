@@ -33,7 +33,7 @@ const SignUp: React.FC = () => {
                   />
                   <Image
                     className="dark:hidden"
-                    src={"/images/logo/Infinity_cycle.png "}
+                    src={"/images/logo/Infinity_cycle_1.png "}
                     alt="Logo"
                     width={150}
                     height={90}
