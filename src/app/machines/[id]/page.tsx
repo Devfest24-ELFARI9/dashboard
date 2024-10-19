@@ -1,9 +1,5 @@
-"use client";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
-import { WeldingRobotData } from "@/types/machine";
 import MachineData from "@/components/machine_data";
+import DashboardProvider from "@/providers/DashboardProvider";
 
 const data: any = {
   machine_id: "painting_robot_002",
@@ -45,9 +41,9 @@ const MachineInfo: React.FC<any> = () => {
   // }, []);
 
   return (
-    <DefaultLayout>
+    <DashboardProvider>
       <MachineData data={data} />
-    </DefaultLayout>
+    </DashboardProvider>
   );
 };
 

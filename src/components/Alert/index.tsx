@@ -1,14 +1,7 @@
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
-import { MouseEventHandler } from "react";
+import { Notification } from "@/contexts/NotificationsContext";
 
-export interface Notification {
-  id?: number;
-  status: string;
-  machine_name: string;
-  fixed: boolean;
-  alert_message: string;
-}
+
+
 
 const Alert: React.FC<Notification & {onClick: () => void}> = ({
   id,

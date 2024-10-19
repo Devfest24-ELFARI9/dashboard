@@ -5,6 +5,7 @@ import Alert from "@/components/Alert";
 import { loadNotificationsAction } from "@/app/actions/loadNotifications";
 import { NotificationsProvider } from "@/contexts/NotificationsContext";
 import AlertsList from "@/components/Alert/AlertList";
+import DashboardProvider from "@/providers/DashboardProvider";
 
 export const metadata: Metadata = {
   title: "Alerts",
@@ -58,15 +59,12 @@ const notifications = [
 ];
 
 const Alerts = async () => {
-  const notis = await loadNotificationsAction();
   return (
-    <DefaultLayout>
-        <NotificationsProvider notis={notis}>
-        <Breadcrumb pageName="Alerts" />
-        <AlertsList />
-        <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"></div>
-        </NotificationsProvider>
-      </DefaultLayout>
+    <DashboardProvider>
+      <Breadcrumb pageName="Alerts" />
+      <AlertsList />
+      <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"></div>
+    </DashboardProvider>
   );
 };
 

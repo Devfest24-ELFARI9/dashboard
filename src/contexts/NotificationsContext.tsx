@@ -1,7 +1,7 @@
 "use client"
 import { apiClient } from "@/api/client";
 import useSocket from "@/app/hooks/useSocket";
-import React, { createContext, useContext, useState, ReactNode, use } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Define the notification type
 export interface Notification {
@@ -9,12 +9,15 @@ export interface Notification {
   title: string;
   machine_name: string;
   fixed: boolean;
+  status: string;
   alert_message: string;
+  timestamp: string;
 }
 
 // Define the context type
 interface NotificationsContextType {
   notifications: Notification[];
+  unfixed: Notification[];
   showUnfixed: () => Notification[];
   fixNotification: (id: number) => void;
 }
@@ -30,6 +33,16 @@ export const NotificationsProvider: React.FC<{
 
   const [notifications, setNotifications] =
     useState<Notification[]>(notis);
+
+    const [unfixed, setUnfixed] = useState(
+      notifications.filter((noti) => !noti.fixed),
+    );
+
+
+    useEffect(() => {
+      console.log("Changing notis");
+      setUnfixed([...notifications.filter((noti) => !noti.fixed)]);
+    }, [notifications])
 
 
   const onMessage = (data) => {
@@ -67,7 +80,7 @@ export const NotificationsProvider: React.FC<{
 
   return (
     <NotificationsContext.Provider
-      value={{ notifications, showUnfixed, fixNotification }}
+      value={{ notifications, showUnfixed, fixNotification, unfixed }}
     >
       {children}
     </NotificationsContext.Provider>
