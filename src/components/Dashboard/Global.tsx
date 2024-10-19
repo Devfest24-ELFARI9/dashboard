@@ -7,6 +7,8 @@ import ChatCard from "../Chat/ChatCard";
 import TableOne from "../Tables/TableOne";
 import CardDataStats, { CardDataStatsProps } from "../CardDataStats";
 import useSocket from "@/app/hooks/useSocket";
+import TempChart from "../RealtimeCharts/TempChart";
+import PowerConsumptionChart from "../RealtimeCharts/PowerConsumptionChart";
 
 
 
@@ -275,10 +277,14 @@ const Global: React.FC = () => {
           </svg>
         </CardDataStats>
       </div>
-
       <div className="mt-16 grid grid-cols-12 gap-4 md:mt-16 md:gap-6 2xl:mt-16 2xl:gap-7.5">
         <ChartOne year={year} dataOne={dd} />
-        <ChartTwo title={"cars production"} producedCars={goodcars} carsWithProblems={badcars}  timePeriod={"weekly"}/>
+        <ChartTwo
+          title={"cars production"}
+          producedCars={goodcars}
+          carsWithProblems={badcars}
+          timePeriod={"weekly"}
+        />
         {/* <ChartThree />
         <MapOne />
         <div className="col-span-12 xl:col-span-8">

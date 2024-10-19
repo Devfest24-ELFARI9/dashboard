@@ -1,8 +1,9 @@
 "use client";
 
 import { ApexOptions } from "apexcharts";
-import React from "react";
+import React, { use, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
+import useSocket from "@/app/hooks/useSocket";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -30,6 +31,19 @@ const options: ApexOptions = {
 
     toolbar: {
       show: false,
+    },
+    animations: {
+      enabled: true, // Enables animation (default is true)
+      easing: "linear", // Animation easing option, can also be "linear", "easeout", etc.
+      speed: 800, // Duration of animation in milliseconds
+      animateGradually: {
+        enabled: true, // Controls whether series should animate one by one
+        delay: 150, // Delay between series animation in milliseconds
+      },
+      dynamicAnimation: {
+        enabled: false, // Enable/disable dynamic animations on data updates
+        speed: 350, // Speed of dynamic animation
+      },
     },
   },
   responsive: [
@@ -129,8 +143,8 @@ export const data = [
   },
 ];
 
+
 const TempChart: React.FC = ({
-  data,
   timestamps
 }: {
   data: {
@@ -139,7 +153,51 @@ const TempChart: React.FC = ({
   }[];
   timestamps: string[];
 }) => {
+  
 
+  const [data, setData] = React.useState<
+    {
+      name: string;
+      data: number[];
+    }[]
+  >(
+    [{
+      name: "Temperature",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    }],
+);
+
+  useEffect(() => {
+    boolRef.current = !boolRef.current;
+    console.log("data", data);
+  }, [data]);
+
+  const onMessage = (message: any) => {
+    setData((prevData) => {
+      const newData = [...prevData];
+      if (message.temperature !== undefined) {
+      newData[0].data = [...newData[0].data, message.temperature];
+      newData[0].data.shift();
+      }
+      return [...newData];
+    });
+  }
+
+  const boolRef =  useRef<boolean>(true);
+  
+
+  useSocket(onMessage, (error) => console.error(error));
+
+  const plot = useMemo(() => (<ReactApexChart
+            key={boolRef.current?.toString()}
+            options={options}
+            series={data}
+            type="line"
+            height={350}
+            width={"100%"}
+          />), [data]);
+
+  const [newInput, setNewInput] = React.useState<number>(0);
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
@@ -150,24 +208,6 @@ const TempChart: React.FC = ({
             </span>
             <div className="w-full">
               <p className="font-semibold text-primary">Temperature</p>
-              {/* <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p> */}
-            </div>
-          </div>
-          <div className="flex min-w-47.5">
-            <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
-            </span>
-            <div className="w-full">
-              <p className="font-semibold text-secondary">Vibration</p>
-              {/* <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p> */}
-            </div>
-          </div>
-          <div className="flex min-w-47.5">
-            <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-[#DC3545]">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-[#DC3545]"></span>
-            </span>
-            <div className="w-full">
-              <p className="font-semibold text-[#DC3545]">Energy Consumption</p>
               {/* <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p> */}
             </div>
           </div>
@@ -189,13 +229,7 @@ const TempChart: React.FC = ({
 
       <div>
         <div id="chartOne" className="-ml-5">
-          <ReactApexChart
-            options={options}
-            series={data}
-            type="line"
-            height={350}
-            width={"100%"}
-          />
+          {data && plot}
         </div>
       </div>
     </div>
