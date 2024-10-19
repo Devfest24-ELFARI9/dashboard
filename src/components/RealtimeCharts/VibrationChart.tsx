@@ -107,7 +107,7 @@ const options: ApexOptions = {
     },
     axisTicks: {
       show: false,
-    },
+    },categories: Array.from({ length: 10 }, (_, i) => `Instant ${i + 1}`),
   },
   yaxis: {
     title: {
@@ -179,7 +179,7 @@ const VibrationChart: React.FC = ({
             options={options}
             series={data}
             type="line"
-            height={350}
+            height={300}
             width={"100%"}
           />), [data]);
 
@@ -192,25 +192,12 @@ const VibrationChart: React.FC = ({
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Vibration</p>
+              <p className="font-semibold text-primary">Vibration realtime</p>
               {/* <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p> */}
             </div>
           </div>
           
         </div>
-        {/* <div className="flex w-full max-w-45 justify-end">
-          <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-            <button className="rounded bg-white px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
-              Day
-            </button>
-            <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Week
-            </button>
-            <button className="rounded px-3 py-1 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Month
-            </button>
-          </div>
-        </div> */}
       </div>
 
       <div>
