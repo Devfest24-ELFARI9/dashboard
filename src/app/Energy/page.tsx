@@ -1,5 +1,5 @@
-// "use client"
 import ChartFour from "@/components/Charts/ChartFour";
+import ChartTwo from "@/components/Charts/ChartTwo";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import MachineCountsCards, { data } from "@/components/MachineCounts/MachineCountsCards";
 import PowerConsumptionChart from "@/components/RealtimeCharts/PowerConsumptionChart";

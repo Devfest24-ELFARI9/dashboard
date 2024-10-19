@@ -4,6 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import DangerAlert from "../Alert/DangerAlert";
 import { useNotifications } from "@/contexts/NotificationsContext";
+import { User } from "lucia";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function DefaultLayout({
   children,
@@ -11,7 +13,7 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const {displayAlert, hideNotificationAlert} = useNotifications();
+  const { displayAlert, hideNotificationAlert } = useNotifications();
   return (
     <>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
@@ -29,7 +31,12 @@ export default function DefaultLayout({
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-             { displayAlert.display && <DangerAlert {...displayAlert.data} hideNotificationAlert={hideNotificationAlert} />}
+              {displayAlert.display && (
+                <DangerAlert
+                  {...displayAlert.data}
+                  hideNotificationAlert={hideNotificationAlert}
+                />
+              )}
               {children}
             </div>
           </main>
