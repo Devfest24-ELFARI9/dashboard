@@ -19,7 +19,7 @@ export default function DangerAlert({ hideNotificationAlert,
  }: DangerAlertProps) {
   
     return (
-    <Link href={`/machines/${machine_name}`} className="fixed bottom-5 right-5 z-[10000000] flex border-l-6  border-[#F87171] bg-[#F87171] px-2 py-4 shadow-md dark:bg-[#1B1B24] md:p-5">
+    <Link href={`/machines/${machine_name}`} className="fixed bottom-5 right-5 z-[10000000] flex border-l-6  border-[#F87171] bg-white px-2 py-4 shadow-md dark:bg-[#1B1B24] md:p-5">
       <Link onClick={hideNotificationAlert} href="#" className="mr-5 flex h-9 w-full max-w-[36px] items-center justify-center rounded-lg bg-[#F87171]">
         <svg
           width="13"
