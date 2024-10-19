@@ -1,6 +1,10 @@
 "use client"
 import ChartTwo from "@/components/Charts/ChartTwo";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import MachineCountsCards, { data } from "@/components/MachineCounts/MachineCountsCards";
+import PowerConsumptionChart from "@/components/RealtimeCharts/PowerConsumptionChart";
+import TempChart from "@/components/RealtimeCharts/TempChart";
+import VibrationChart from "@/components/RealtimeCharts/VibrationChart";
 import DashboardProvider from "@/providers/DashboardProvider";
 
 
@@ -16,6 +20,10 @@ const Energy: React.FC = () => {
           producedCars={producedCars}
           timePeriod={"weekly"}
         />
+        <MachineCountsCards data={data} />
+        <PowerConsumptionChart />
+        <TempChart />
+        <VibrationChart />
       </DashboardProvider>
     );
   };

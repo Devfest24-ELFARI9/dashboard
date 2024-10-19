@@ -143,9 +143,8 @@ export const data = [
   },
 ];
 
-
 const PowerConsumptionChart: React.FC = ({
-  timestamps
+  timestamps,
 }: {
   data: {
     name: string;
@@ -153,15 +152,17 @@ const PowerConsumptionChart: React.FC = ({
   }[];
   timestamps: string[];
 }) => {
-  
-
-  const [data, setData] = React.useState<{
-    name: string;
-    data: number[];
-  }[]>([{
-    name: "Power Consumption",
-    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  }]);
+  const [data, setData] = React.useState<
+    {
+      name: string;
+      data: number[];
+    }[]
+  >([
+    {
+      name: "Power Consumption",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+  ]);
 
   useEffect(() => {
     boolRef.current = !boolRef.current;
@@ -172,26 +173,30 @@ const PowerConsumptionChart: React.FC = ({
     setData((prevData) => {
       const newData = [...prevData];
       if (message.power_consumption !== undefined) {
-      newData[0].data = [...newData[0].data, message.power_consumption];
-      newData[0].data.shift();
+        newData[0].data = [...newData[0].data, message.power_consumption];
+        newData[0].data.shift();
       }
       return [...newData];
     });
-  }
+  };
 
-  const boolRef =  useRef<boolean>(true);
-  
+  const boolRef = useRef<boolean>(true);
 
   useSocket(onMessage, (error) => console.error(error));
 
-  const plot = useMemo(() => (<ReactApexChart
-            key={boolRef.current?.toString()}
-            options={options}
-            series={data}
-            type="line"
-            height={350}
-            width={"100%"}
-          />), [data]);
+  const plot = useMemo(
+    () => (
+      <ReactApexChart
+        key={boolRef.current?.toString()}
+        options={options}
+        series={data}
+        type="line"
+        height={350}
+        width={"100%"}
+      />
+    ),
+    [data],
+  );
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">

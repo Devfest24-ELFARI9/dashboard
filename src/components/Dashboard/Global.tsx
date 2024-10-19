@@ -8,6 +8,8 @@ import CardDataStats, { CardDataStatsProps } from "../CardDataStats";
 import useSocket from "@/app/hooks/useSocket";
 import TempChart from "../RealtimeCharts/TempChart";
 import PowerConsumptionChart from "../RealtimeCharts/PowerConsumptionChart";
+import VibrationChart from "../RealtimeCharts/VibrationChart";
+import MachineCountsCards, { data } from "../MachineCounts/MachineCountsCards";
 
 
 
@@ -290,6 +292,7 @@ const Global: React.FC = () => {
         </div>
         <ChatCard /> */}
       </div>
+    
     </>
   );
 };
