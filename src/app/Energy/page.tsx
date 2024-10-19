@@ -1,5 +1,4 @@
 import ChartTwo from "@/components/Charts/ChartTwo";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import DashboardProvider from "@/providers/DashboardProvider";
 
 
