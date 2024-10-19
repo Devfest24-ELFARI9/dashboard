@@ -8,7 +8,7 @@ type UseSocketData<T> = {
   error: Error | null;
 };
 
-const url = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+const url = process.env.NEXT_PUBLIC_WEBSOCKET_URL ?? "ws://localhost:8080";
 
 interface UseSocketProps<T> {
   url: string; // WebSocket URL passed as a parameter
@@ -20,12 +20,14 @@ const useSocket = <T = unknown>(
   onMessage: (data) => void,
   onError: (error: ErrorEvent) => void
 ): UseSocketData<T> => {
+  console.log("Connecting to ", url);
   const socketRef = useRef<WebSocket | null>(null);
-
+  
   useEffect(() => {
     // Initialize Socket.IO connection
     const socket = new WebSocket(url);
-
+    console.log("Connecting to ", url);
+    console.log(socket.OPEN);
     socketRef.current = socket;
     
     // Listen for data from the specified event
@@ -37,7 +39,7 @@ const useSocket = <T = unknown>(
 
     // Handle connection errors
     socketRef.current.onerror = (err: any) => {
-      onError(err);
+      onError("socket error", err);
     };
 
     // Cleanup function to disconnect the socket when the component unmounts
