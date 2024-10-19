@@ -1,18 +1,35 @@
 import Calendar from "@/components/Calender";
 import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import DashboardProvider from "@/providers/DashboardProvider";
+import TaskQueue from "@/components/Task/taskqueue";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 export const metadata: Metadata = {
-  title: "Next.js Calender | TailAdmin - Next.js Dashboard Template",
+  title: "Tasks Page",
   description:
-    "This is Next.js Calender page for TailAdmin  Tailwind CSS Admin Dashboard Template",
+    "Task",
 };
 
 const CalendarPage = () => {
+  const tasks = [
+    'Task 1: Fix bugs',
+    'Task 2: Add new feature',
+    'Task 3: Write documentation',
+    'Task 4: Review code',
+    'Task 4: Review code',
+    'Task 4: Review code',
+    'Task 4: Review code',
+    'Task 4: Review code',
+    'Task 4: Review code',
+    
+  ];
   return (
     <DashboardProvider>
-      <Calendar />
+      <Breadcrumb pageName="Tasks" />
+      <div className="min-h-screen  flex items-center justify-center">
+      <TaskQueue tasks={tasks} />
+      </div>
+      {/* <Calendar /> */}
     </DashboardProvider>
   );
 };
