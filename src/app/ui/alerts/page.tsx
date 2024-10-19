@@ -6,6 +6,9 @@ import { loadNotificationsAction } from "@/app/actions/loadNotifications";
 import { NotificationsProvider } from "@/contexts/NotificationsContext";
 import AlertsList from "@/components/Alert/AlertList";
 import DashboardProvider from "@/providers/DashboardProvider";
+import { headers } from "next/headers";
+import { lucia } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Alerts",
@@ -63,7 +66,6 @@ const Alerts = async () => {
     <DashboardProvider>
       <Breadcrumb pageName="Alerts" />
       <AlertsList />
-      <div className="rounded-sm border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark md:p-6 xl:p-9"></div>
     </DashboardProvider>
   );
 };

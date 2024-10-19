@@ -6,53 +6,87 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Form from "@/lib/form";
-
-
+import DarkModeSwitcher from "@/components/Header/DarkModeSwitcher"
+import { useState } from "react";
 
 export const metadata: Metadata = {
-  title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Signin Page TailAdmin Dashboard Template",
+  title: "SignIn Page ",
+  description: "Sign in",
 };
 
 const SignIn: React.FC = async () => {
+
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [error, setError] = useState('');
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setError(''); // Reset error message
+
+  //   const formData = new FormData();
+  //   formData.append('email', email);
+  //   formData.append('password', password);
+
+  //   try {
+  //     const response = await fetch('/api/login', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       throw new Error(data.error); // Throw error to be caught in the catch block
+  //     }
+
+  //     // If login is successful, redirect or perform some action
+  //     window.location.href = '/'; // Example: redirect to home page
+  //   } catch (error) {
+  //     setError(error.message); // Set the error message state
+  //   }
+  // };
   // const authRequest = lib.handleRequest("GET", context);
   // const session = await authRequest.validate();
   // if (session) redirect("/");
 
 
   return (
-    <DefaultLayout>
-      <Breadcrumb pageName="Sign In" />
+    <>
+      
+      {/* <Breadcrumb pageName="Sign In" /> */}
+      {/* <DarkModeSwitcher/> */}
 
-      <form>
+      <form >
+      <div className="flex items-center justify-center min-h-screen">
+      
+      
 
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-lg border  border-stroke bg-white hadow-lg hover:shadow-2xl transition-shadow duration-300 dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-center p-8">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">
-              <Link className="mb-5.5 inline-block" href="/">
+              <Link className="mb-4 inline-block" href="/">
                 <Image
                   className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
+                  src={"/images/logo/Infinity_cycle_1.png"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width={150}
+                  height={90}
                 />
                 <Image
                   className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
+                  src={"/images/logo/Infinity_cycle_1.png "}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width={150}
+                  height={90}
                 />
               </Link>
 
               <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+                Welcome TO Infinite Factory
               </p>
 
-              <span className="mt-15 inline-block">
+              <span className="mt-8 inline-block">
                 <svg
                   width="350"
                   height="350"
@@ -179,9 +213,9 @@ const SignIn: React.FC = async () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Start for free</span>
+              <span className="mb-1.5 block font-medium">Welcome</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to TailAdmin
+                Sign In to Infinite Factory
               </h2>
 
               <Form action="/api/login">
@@ -226,7 +260,7 @@ const SignIn: React.FC = async () => {
                       name="password"
                       id="password"
                       type="password"
-                      placeholder="6+ Characters, 1 Capital letter"
+                      placeholder="8+ Characters"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     />
 
@@ -313,8 +347,10 @@ const SignIn: React.FC = async () => {
           </div>
         </div>
       </div>
+      
+      </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 

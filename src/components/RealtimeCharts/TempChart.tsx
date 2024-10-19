@@ -107,7 +107,7 @@ const options: ApexOptions = {
     },
     axisTicks: {
       show: false,
-    },
+    },categories: Array.from({ length: 10 }, (_, i) => `Instant ${i + 1}`),
   },
   yaxis: {
     title: {
@@ -175,13 +175,27 @@ const TempChart: React.FC = ({
   const onMessage = (message: any) => {
     setData((prevData) => {
       const newData = [...prevData];
+      
       if (message.temperature !== undefined) {
-      newData[0].data = [...newData[0].data, message.temperature];
-      newData[0].data.shift();
+        // Get the data array we want to modify
+        const dataArray = newData[0].data;
+  
+        // Check if the last value is zero or not
+        if (dataArray[dataArray.length - 1] === 0) {
+          // Find the first occurrence of 0 from the left
+          const zeroIndex = dataArray.indexOf(0);
+  
+          if (zeroIndex !== -1) {
+            // Replace the first 0 with the new temperature value
+            dataArray[zeroIndex] = message.temperature;
+          }
+        }
       }
+      
       return [...newData];
     });
-  }
+  };
+  
 
   const boolRef =  useRef<boolean>(true);
   
@@ -193,7 +207,7 @@ const TempChart: React.FC = ({
             options={options}
             series={data}
             type="line"
-            height={350}
+            height={300}
             width={"100%"}
           />), [data]);
 
@@ -207,7 +221,7 @@ const TempChart: React.FC = ({
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Temperature</p>
+              <p className="font-semibold text-primary">Temperature realtime</p>
               {/* <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p> */}
             </div>
           </div>
