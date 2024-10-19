@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function AlertsList() {
   const { notifications, fixNotification } = useNotifications();
   return (
-    <div className="flex max-h-[40rem] flex-col gap-7.5 overflow-auto">
+    <div className="flex max-h-[50rem] flex-col gap-7.5 overflow-y-auto">
       {notifications.map((notification) => (
         <Link
           key={notification.id}

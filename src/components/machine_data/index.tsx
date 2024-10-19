@@ -40,7 +40,7 @@ const MachineData: React.FC<any> = () => {
     useSocket(onMessage, onError);
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 mt-16">
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 mt-2  justify-center h-[49rem] overflow-scroll">
             <h2 className="text-2xl font-bold text-dark-blue mb-8 text-center">
                 {machineName}
             </h2>

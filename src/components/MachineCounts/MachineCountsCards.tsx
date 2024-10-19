@@ -1,3 +1,4 @@
+"use client"
 import CardWithPie, { CardWithPieProps } from "./CardWithPie";
 import React from 'react'
 
