@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
   const formData = await request.formData();
   const username = formData.get("email");
   const password = formData.get("password");
-  const role = formData.get("role");
+  const role = formData.get("role") ?? "operator";
   // basic check
   if (
     typeof username !== "string" ||
