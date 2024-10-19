@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Create a provider component to wrap the app
 export const AuthProvider: React.FC<{
-  user: User;
+  user: User;   
   session: Session;
   children: ReactNode;
 }> = ({ user, session, children }) => {
@@ -33,9 +33,9 @@ export const AuthProvider: React.FC<{
   const [sessionState, setSession] = useState<Session | null>(session);
 
   const logout = () => {
-    "use server";
-    setUser(null);
-    // localStorage.removeItem("token"); // Clear token as needed
+    // "use server";
+    // setUser(null);
+    // // localStorage.removeItem("token"); // Clear token as needed
   };
 
   return (

@@ -16,7 +16,7 @@ export const lucia = new Lucia(new PrismaAdapter(db.session, db.user), {
     return {
       id : attributes.id,
       role: attributes.role,
-      username: attributes.email,
+      email: attributes.email,
 
     };
   },
