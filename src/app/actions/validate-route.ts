@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 
 const getSession = async () => {
   const cookies = headers().get("cookie");
+  if (cookies === null) {
+    return { session: null, user: null };
+  }
   const sessionId = lucia.readSessionCookie(cookies);
   const { session, user } = await lucia.validateSession(sessionId);
   return { session, user };
