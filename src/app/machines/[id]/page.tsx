@@ -1,5 +1,8 @@
 import MachineData from "@/components/machine_data";
 import DashboardProvider from "@/providers/DashboardProvider";
+import TempChart from "@/components/RealtimeCharts/TempChart";
+import VibrationChart from "@/components/RealtimeCharts/VibrationChart";
+
 
 const data: any = {
   machine_id: "painting_robot_002",
@@ -42,7 +45,20 @@ const MachineInfo: React.FC<any> = () => {
 
   return (
     <DashboardProvider>
-      <MachineData data={data} />
+                 <div className="flex flex-col md:flex-row justify-center items-start  gap-4">
+                {/* Left Column: MachineData */}
+                <div className="w-full md:w-1/3 p-4">
+                    <MachineData data={data} />
+                </div>
+
+                {/* Right Column: Charts */}
+                <div className="w-full md:w-2/3 p-4">
+                    <div className="flex flex-col space-y-4">
+                        <TempChart />
+                        <VibrationChart />
+                    </div>
+                </div>
+            </div>
     </DashboardProvider>
   );
 };

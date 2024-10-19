@@ -1,5 +1,5 @@
-"use client"
-import ChartTwo from "@/components/Charts/ChartTwo";
+// "use client"
+import ChartFour from "@/components/Charts/ChartFour";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import MachineCountsCards, { data } from "@/components/MachineCounts/MachineCountsCards";
 import PowerConsumptionChart from "@/components/RealtimeCharts/PowerConsumptionChart";
@@ -10,20 +10,22 @@ import DashboardProvider from "@/providers/DashboardProvider";
 
 const Energy: React.FC = () => {
     // This is the array of cars produced (for this example)
-    const producedCars = [44, 55, 41, 67, 22, 43, 65]; // Example data for good cars
+    const consumedenergy = [44, 55, 41, 67, 22, 43, 65]; 
+
+
   
     return (
       <DashboardProvider>
         {/* Pass only the producedCars array as a prop */}
-        <ChartTwo
+        <ChartFour
           title={"enregy consumption"}
-          producedCars={producedCars}
+          producedCars={consumedenergy}
           timePeriod={"weekly"}
         />
         <MachineCountsCards data={data} />
         <PowerConsumptionChart />
-        <TempChart />
-        <VibrationChart />
+        {/* <TempChart />
+        <VibrationChart /> */}
       </DashboardProvider>
     );
   };
