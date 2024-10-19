@@ -6,6 +6,9 @@ import { loadNotificationsAction } from "@/app/actions/loadNotifications";
 import { NotificationsProvider } from "@/contexts/NotificationsContext";
 import AlertsList from "@/components/Alert/AlertList";
 import DashboardProvider from "@/providers/DashboardProvider";
+import { headers } from "next/headers";
+import { lucia } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Alerts",

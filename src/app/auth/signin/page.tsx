@@ -21,7 +21,7 @@ const SignIn: React.FC = async () => {
 
 
   return (
-    <DefaultLayout>
+    <>
       <Breadcrumb pageName="Sign In" />
 
       <form>
@@ -314,7 +314,7 @@ const SignIn: React.FC = async () => {
         </div>
       </div>
       </form>
-    </DefaultLayout>
+    </>
   );
 };
 
