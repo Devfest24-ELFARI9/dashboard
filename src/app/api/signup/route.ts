@@ -13,11 +13,14 @@ export const POST = async (request: NextRequest) => {
   const username = formData.get("email");
   const password = formData.get("password");
   const role = formData.get("role");
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   // basic check
   if (
     typeof username !== "string" ||
     username.length < 4 ||
-    username.length > 31
+    username.length > 31||
+    !emailRegex.test(username)
   ) {
     return NextResponse.json(
       {
@@ -30,12 +33,26 @@ export const POST = async (request: NextRequest) => {
   }
   if (
     typeof password !== "string" ||
-    password.length < 6 ||
+    password.length < 8 ||
     password.length > 255
   ) {
     return NextResponse.json(
       {
         error: "Invalid password",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+  if (
+    typeof role !== "string" ||
+     (role !== "operator" && role !== "manager") 
+    
+  ) {
+    return NextResponse.json(
+      {
+        error: "Invalid Role",
       },
       {
         status: 400,

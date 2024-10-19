@@ -18,15 +18,20 @@ export const POST = async (request: NextRequest) => {
   const formData = await request.formData();
   const username = formData.get("email");
   const password = formData.get("password");
-  // basic check
+
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // basic checks 
   if (
     typeof username !== "string" ||
     username.length < 1 ||
-    username.length > 31
+    username.length > 31 ||
+    !emailRegex.test(username) 
   ) {
+    console.log("username: ",username)
     return NextResponse.json(
       {
-        error: "Invalid username",
+        error: "Invalid email",
       },
       {
         status: 400,
@@ -35,7 +40,7 @@ export const POST = async (request: NextRequest) => {
   }
   if (
     typeof password !== "string" ||
-    password.length < 1 ||
+    password.length < 8 ||
     password.length > 255
   ) {
     return NextResponse.json(
@@ -47,6 +52,7 @@ export const POST = async (request: NextRequest) => {
       },
     );
   }
+  
   try {
     // find user by key
     // and validate password
