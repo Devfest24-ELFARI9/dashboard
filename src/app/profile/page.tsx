@@ -1,8 +1,8 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
+import DashboardProvider from "@/providers/DashboardProvider";
 
 export const metadata: Metadata = {
   title: "Next.js Profile | TailAdmin - Next.js Dashboard Template",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const Profile = () => {
   return (
-    <DefaultLayout>
+    <DashboardProvider>
       <div className="mx-auto max-w-242.5">
         <Breadcrumb pageName="Profile" />
 
@@ -309,7 +309,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </DashboardProvider>
   );
 };
 

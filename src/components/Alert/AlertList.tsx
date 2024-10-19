@@ -14,13 +14,12 @@ export default function AlertsList() {
           href={`/machines/${notification.machine_name}`}
         >
           <Alert
-            onClick={() => {fixNotification(notification.id);}}
+            onClick={() => { fixNotification(notification.id); } }
             id={notification.id}
             status={notification.fixed ? "Issue Fixed" : "Attention Needed"}
             machine_name={notification.machine_name}
             alert_message={notification.alert_message}
-            fixed={notification.fixed}
-          />
+            fixed={notification.fixed} title={notification.title} timestamp={""}          />
         </Link>
       ))}
     </div>

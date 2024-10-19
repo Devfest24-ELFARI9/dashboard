@@ -1,8 +1,6 @@
 import Global from "@/components/Dashboard/Global";
 import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { NotificationsProvider } from "@/contexts/NotificationsContext";
-import { loadNotificationsAction } from "./actions/loadNotifications";
+import DashboardProvider from "@/providers/DashboardProvider";
 
 export const metadata: Metadata = {
   title:
@@ -12,8 +10,8 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-      <DefaultLayout>
-        <Global />
-      </DefaultLayout>
+    <DashboardProvider>
+      <Global />
+    </DashboardProvider>
   );
 }

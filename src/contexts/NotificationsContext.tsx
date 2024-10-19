@@ -1,22 +1,31 @@
 "use client"
 import { apiClient } from "@/api/client";
 import useSocket from "@/app/hooks/useSocket";
-import React, { createContext, useContext, useState, ReactNode, use } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-// Define the notification type
+export const notifcationDelay = 5000;// Define the notification type
 export interface Notification {
   id: number;
   title: string;
   machine_name: string;
   fixed: boolean;
+  status: string;
   alert_message: string;
+  timestamp: string;
 }
 
 // Define the context type
 interface NotificationsContextType {
   notifications: Notification[];
+  unfixed: Notification[];
+  notifying: boolean;
+  dropdownOpen: boolean;
+  displayAlert: { display: boolean; data: Notification | null };
+  setDropdownOpen: (open: boolean) => void;
+  setNotifying: (notifying: boolean) => void;
   showUnfixed: () => Notification[];
   fixNotification: (id: number) => void;
+  hideNotificationAlert: () => void;
 }
 
 // Create the context with default value (undefined)
@@ -27,18 +36,70 @@ export const NotificationsProvider: React.FC<{
   children: ReactNode;
   notis: Notification[]
 }> = ({ notis, children }) => {
-
+  const [displayAlert, setDisplayAlert] = useState<{display: boolean; data: Notification | null}>({display: false, data: null});
   const [notifications, setNotifications] =
     useState<Notification[]>(notis);
 
+    const [unfixed, setUnfixed] = useState(
+      notifications.filter((noti) => !noti.fixed),
+    );
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [notifying, setNotifying] = useState(true);
+
+    useEffect(() => {
+      setUnfixed([...notifications.filter((noti) => !noti.fixed)]);
+    }, [notifications])
+
+
+    const displayNotificationAlert = (data: Notification) => {
+      setDisplayAlert({display: true, data});
+      setTimeout(() => {
+        setDisplayAlert({ display: false, data });
+      }, notifcationDelay)
+    }
   const onMessage = (data) => {
+    setNotifying(true);
+
+
+    setNotifications((prevNotifications) => {
+      return [{
+      id: 6,
+      title: "Stamping Presses",
+      machine_name: "stamping_press_001",
+      fixed: false,
+      alert_message:
+        "2 You can't index the microchip without copying the neural TCP matrix!",
+    }, ...prevNotifications];
+    });
+    displayNotificationAlert({
+      id: 6,
+      title: "Stamping Presses",
+      machine_name: "stamping_press_001",
+      fixed: false,
+      alert_message:
+        "2 You can't index the microchip without copying the neural TCP matrix!",
+    });
+
     if (data?.channel === "notifications") {
+      displayNotificationAlert({
+        id: 6,
+        title: "Stamping Presses",
+        machine_name: "stamping_press_001",
+        fixed: false,
+        alert_message:
+          "2 You can't index the microchip without copying the neural TCP matrix!",
+      });
+      setNotifying(true);
       setNotifications((prevNotifications) => {
         return [data?.data, ...prevNotifications];
       });
     }
 
+  }
+
+  const hideNotificationAlert = () => {
+    setDisplayAlert({display: false, data: null});
   }
 
   useSocket(onMessage, (error) => console.error(error));
@@ -67,7 +128,18 @@ export const NotificationsProvider: React.FC<{
 
   return (
     <NotificationsContext.Provider
-      value={{ notifications, showUnfixed, fixNotification }}
+      value={{
+        notifications,
+        showUnfixed,
+        fixNotification,
+        unfixed,
+        notifying,
+        setNotifying,
+        dropdownOpen,
+        setDropdownOpen,
+        displayAlert,
+        hideNotificationAlert,
+      }}
     >
       {children}
     </NotificationsContext.Provider>
