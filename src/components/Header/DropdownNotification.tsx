@@ -6,9 +6,7 @@ import { useNotifications } from "@/contexts/NotificationsContext";
 import { HeaderNotification } from "../Alert/HeaderNotification";
 
 const DropdownNotification = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
-  const { unfixed, fixNotification } = useNotifications();
+  const { unfixed, fixNotification, notifying, setNotifying, setDropdownOpen, dropdownOpen } = useNotifications();
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <li>
