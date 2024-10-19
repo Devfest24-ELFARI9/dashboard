@@ -1,12 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartTwo from "../Charts/ChartTwo";
-import ChatCard from "../Chat/ChatCard";
-import TableOne from "../Tables/TableOne";
-import CardDataStats, { CardDataStatsProps } from "../CardDataStats";
-import useSocket from "@/app/hooks/useSocket";
+import CardDataStats from "../CardDataStats";
 
 
 

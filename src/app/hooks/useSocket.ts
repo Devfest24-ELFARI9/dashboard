@@ -1,6 +1,6 @@
 // useSocket.ts
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 // Type definition for the data received from the server
 type UseSocketData<T> = {
@@ -8,7 +8,7 @@ type UseSocketData<T> = {
   error: Error | null;
 };
 
-const url = "http://localhost:3005";
+const url = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
 
 interface UseSocketProps<T> {
   url: string; // WebSocket URL passed as a parameter
