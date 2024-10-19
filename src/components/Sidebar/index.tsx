@@ -405,7 +405,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <Image
               width={80}
               height={80}
-              src={"/images/logo/the-cars-factory-logo.png"}
+              src={"/images/logo/Infinity_cycle_1.png"}
               alt="Logo"
               priority
             />
