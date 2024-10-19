@@ -1,3 +1,4 @@
+"use client"
 import { apiClient } from "@/api/client";
 import useSocket from "@/app/hooks/useSocket";
 import React, { createContext, useContext, useState, ReactNode, use } from "react";
@@ -46,12 +47,14 @@ export const NotificationsProvider: React.FC<{
    return notifications.filter((noti) => !noti.fixed);
   }
 
+
   const fixNotification = async (id: number) => {
     // TODO: Fix the notification with the given ID
     // const res = await apiClient("/notifications/fix", {method: "POST", body: JSON.stringify({id})});
     // if(!res.ok) {
     //   alert("Failed to fix the notification");
     // }
+    alert(id);
     setNotifications((prevNotifications) => {
       return prevNotifications.map((noti) => {
         if (noti.id === id) {

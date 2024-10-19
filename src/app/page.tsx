@@ -11,12 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const notis = await loadNotificationsAction();
   return (
-    <NotificationsProvider notis={notis}>
       <DefaultLayout>
         <Global />
       </DefaultLayout>
-    </NotificationsProvider>
   );
 }
